@@ -9,8 +9,11 @@ const Contact = () => {
   const [address, setAddress]= useState("");
   const [message, setMessage]= useState("");
 
+  const[loader, setLoader]=useState(false);
+
   const handleSubmit =(e) => {
     e.preventDefault(); 
+    setLoader(true);
 
     db.collection('Order Contact').add({
       name:name,
@@ -20,10 +23,12 @@ const Contact = () => {
       message:message,
     })
     .then(() =>{
-      alert('Message Has Been Submitted.')
+      alert('Message Has Been Submitted.');
+      setLoader(false);
     })
     .catch((error) =>{
-      alert(error.message)
+      alert(error.message);
+      setLoader(false);
     });
 
     setName('')
@@ -71,7 +76,9 @@ const Contact = () => {
       ></textarea>
 
 
-      <button type="submit">Submit</button>
+      <button type="submit"
+      style={{background :loader ? "#ccc" : "rgb(2,2,110"}}
+      >Submit</button>
 
     </form>
   )
